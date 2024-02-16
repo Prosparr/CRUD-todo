@@ -1,0 +1,94 @@
+let form = document.getElementById("form");
+let textInput = document.getElementById("textInput");
+let dateInput = document.getElementById("dateInput")
+let textarea = document.getElementById("textarea")
+let msg = document.getElementById("msg")
+let tasks = document.getElementById("tasks")
+let add = document.getElementById("add")
+
+form.addEventListener("submit", (e) =>{
+    e.preventDefault();
+    formValidation();
+});
+
+let formValidation = () =>{
+    if (textInput.value === "") {
+        console.log("fail");
+        msg.innerHTML = "text cannot be blank";
+    } else {
+        console.log("success")
+        msg.innerHTML = "";
+        acceptData();
+        add.setAttribute("data-bs-dismiss", "modal")
+        add.click();
+        (()=> {
+            add.setAttribute("data-bs-dismiss","");
+        })();
+    }
+}
+
+let data = []
+
+let acceptData = () => {
+    data.push({
+        text: textInput.value,
+        date: dateInput.value,
+        description: textarea.value,
+    });
+
+    localStorage.setItem("data", JSON.stringify(data));
+
+    console.log(data);
+    createTodo();
+}
+
+let createTodo = () => {
+    tasks.innerHTML = "";
+    data.map((x,y)=>{
+        return (tasks.innerHTML += `
+            <div id=${y} >
+                    <span class="fw-bold">${x.text}</span> 
+                    <span class="small text-secondary">${x.date}</span>
+                    <p>${x.description} </p>
+                
+                    <span class="options">
+                        <i onClick="editTodo(this)" data-bs-toggle="modal" data-bs-target="#form" class="fa-regular fa-pen-to-square"></i>
+                        <i onClick="deleteTodo(this); createTodo()" class="fa-solid fa-trash"></i>
+                    </span>
+            </div>`
+        );
+    });
+
+    resetForm(); 
+}
+
+let deleteTodo = (e) =>{
+    e.parentElement.parentElement.remove();
+    data.splice(e.parentElement.parentElement.id, 1)
+    // this removes the card that was deleted from the console also, the id is assigned by the y above.
+    localStorage.setItem("data", JSON.stringify(data));
+}
+
+let editTodo = (e) =>{
+
+    let selectedTask = e.parentElement.parentElement;
+
+    textInput.value = selectedTask.children[0].innerHTML
+    dateInput.value = selectedTask.children[1].innerHTML
+    textarea.value = selectedTask.children[2].innerHTML
+
+    deleteTodo(e);
+       
+}; 
+
+let resetForm = () =>{
+    textInput.value = "";
+    dateInput.value = "";
+    textarea.value = "";
+};
+
+(() => {
+    data = JSON.parse(localStorage.getItem("data")) || [];
+    createTodo();
+    console.log(data)
+})();

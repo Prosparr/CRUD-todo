@@ -1,0 +1,72 @@
+body{
+    font-family: sans-serif;
+    background-color: #DBE2EB;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app{
+    width: 300px;
+    height: 550px;
+    overflow-y: scroll;
+    border: 5px solid #1E293B ;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 0 auto;
+}
+
+.app::-webkit-scrollbar { width: 0 !important }
+.app { overflow: -moz-scrollbars-none; }
+
+#addNew{
+    background-color: #1E293B;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.fa-plus{
+    padding: 3px;
+    border-radius: 3px;
+}
+i{
+    background-color: #94A3B8;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+#tasks{
+    display: grid;
+    gap: 15px;
+}
+
+#tasks div{
+    background-color: #1E293B;
+    color: white;
+    border: 3px solid #94A3B8;
+    padding: 10px;
+    border-radius: 8px;
+    display: grid;
+    gap: 4px;
+
+}
+
+.options{
+    justify-self: center;
+    display: flex;
+    gap: 10px;
+}
+
+.options i{
+    cursor: pointer;
+}
+
+#msg{
+    color: red;
+}
